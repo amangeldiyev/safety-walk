@@ -1,0 +1,12 @@
+Audit
+    Date
+    Mode: conversation, guided 
+    Site
+    Contact
+    IsVirtual
+    OverallComment
+    Observation
+    PointOfImprovement
+    Attachements
+    FollowUpDate
+
