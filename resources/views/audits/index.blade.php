@@ -75,6 +75,7 @@
                                     {{ $audit->follow_up_date }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <a href="{{ route('audits.show', $audit->id) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500 block">View</a>
                                     <a href="{{ route('audits.edit', $audit->id) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500 block">Edit</a>
                                     <a href="{{ route('audits.questions.create', $audit->id) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500 block">Questions</a>
                                     <form action="{{ route('audits.destroy', $audit->id) }}" method="POST" class="inline block">
