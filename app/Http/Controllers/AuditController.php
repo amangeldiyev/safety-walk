@@ -44,7 +44,7 @@ class AuditController extends Controller
     {
         $audit = Audit::create($request->validated());
 
-        if ($audit->mode === AuditMode::CONVERSATION) {
+        if ($audit->mode == (AuditMode::CONVERSATION)->value) {
             return redirect()->route('audits.details', $audit);
         } else {
             $segments = QuestionSegment::with('auditQuestions')->get();
