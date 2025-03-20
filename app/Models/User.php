@@ -45,4 +45,14 @@ class User extends \TCG\Voyager\Models\User
             'password' => 'hashed',
         ];
     }
+
+    public function audits()
+    {
+        return $this->hasMany(Audit::class, 'contact');
+    }
+
+    public function getActualCountAttribute()
+    {
+        return $this->audits()->count();
+    }
 }

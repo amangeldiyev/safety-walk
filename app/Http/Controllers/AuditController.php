@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AuditMode;
 use App\Http\Requests\CreateAuditRequest;
 use App\Http\Requests\UpdateAuditRequest;
 use App\Models\Audit;
@@ -11,6 +12,7 @@ use App\Models\QuestionSegment;
 use App\Models\Site;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Storage;
 
 class AuditController extends Controller
 {
@@ -40,9 +42,62 @@ class AuditController extends Controller
      */
     public function store(CreateAuditRequest $request)
     {
-        Audit::create($request->validated());
+        $audit = Audit::create($request->validated());
+
+        if ($audit->mode === AuditMode::CONVERSATION) {
+            return redirect()->route('audits.details', $audit);
+        } else {
+            $segments = QuestionSegment::with('auditQuestions')->get();
+
+            return view('audits.questions', compact('audit', 'segments'));
+        }
 
         return redirect()->route('audits.index')->with('success', 'Audit created successfully.');
+    }
+
+    /**
+     * Display the details form for the specified audit.
+     */
+    public function details(Audit $audit)
+    {
+        return view('audits.details', compact('audit'));
+    }
+
+    /**
+     * Store the details for the specified audit.
+     */
+    public function storeDetails(Request $request, Audit $audit)
+    {
+        $request->validate([
+            'good_practice' => 'nullable|boolean',
+            'point_of_improvement' => 'nullable|boolean',
+            'signature' => 'required',
+            'comment' => 'nullable|string',
+            'follow_up_date' => 'nullable|date',
+            'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+        ]);
+
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $file) {
+                $path = $file->store('attachments', 'public');
+                $audit->attachments()->create([
+                    'file_path' => $path,
+                    'file_name' => $file->getClientOriginalName(),
+                    'file_type' => $file->getClientMimeType(),
+                    'file_size' => $file->getSize(),
+                ]);
+            }
+        }
+
+        $image = base64_decode(str_replace(['data:image/png;base64,', ' '], ['', '+'], $request->input('signature')));
+        $imageName = 'signatures/' . uniqid() . '.png';
+
+        Storage::disk('public')->put($imageName, base64_decode($image));
+        $request->merge(['signature' => $imageName]);
+
+        $audit->update($request->only('comment', 'good_practice', 'point_of_improvement', 'signature', 'follow_up_date'));
+
+        return redirect()->route('audits.index')->with('success', 'Details saved successfully.');
     }
 
     /**
@@ -127,7 +182,6 @@ class AuditController extends Controller
     {
         $segments = QuestionSegment::with('auditQuestions')->get();
         $audit->load('items');
-        // dd($audit->items);
 
         return view('audits.questions', compact('audit', 'segments'));
     }
@@ -148,6 +202,6 @@ class AuditController extends Controller
             }
         }
 
-        return redirect()->route('audits.index')->with('success', 'Questions saved successfully.');
+        return redirect()->route('audits.details', $audit);
     }
 }

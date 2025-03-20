@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Create Audit') }}
+            {{ __('Register Safety Walk') }}
         </h2>
     </x-slot>
 
@@ -24,6 +24,13 @@
                             </select>
                         </div>
                         <div class="mb-4">
+                            <label for="is_virtual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Virtual</label>
+                            <select id="is_virtual" name="is_virtual" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
                             <label for="site_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Site</label>
                             <select id="site_id" name="site_id" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                                 @foreach($sites as $site)
@@ -39,21 +46,14 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-4">
-                            <label for="is_virtual" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Is Virtual</label>
-                            <select id="is_virtual" name="is_virtual" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
-                            </select>
-                        </div>
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label for="comment" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Comment</label>
                             <textarea id="comment" name="comment" rows="3" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
                         </div>
                         <div class="mb-4">
                             <label for="follow_up_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Follow Up Date</label>
                             <input type="date" id="follow_up_date" name="follow_up_date" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        </div>
+                        </div> --}}
                         <button type="submit" class="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Audit</button>
                     </form>
                 </div>

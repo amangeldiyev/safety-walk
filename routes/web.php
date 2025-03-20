@@ -9,6 +9,8 @@ Route::get('/', function () {
 });
 
 Route::resource('audits', AuditController::class);
+Route::get('audits/{audit}/details', [AuditController::class, 'details'])->name('audits.details');
+Route::post('audits/{audit}/details', [AuditController::class, 'storeDetails'])->name('audits.details.store');
 Route::get('audits/{audit}/questions', [AuditController::class, 'questions'])->name('audits.questions.create');
 Route::post('audits/{audit}/questions', [AuditController::class, 'storeQuestions'])->name('audits.questions.store');
 Route::post('audits/{audit}/attachments', [AuditController::class, 'storeAttachment'])->name('audits.attachments.store');
