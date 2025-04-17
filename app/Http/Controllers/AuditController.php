@@ -65,9 +65,7 @@ class AuditController extends Controller
         if ($audit->mode == (AuditMode::CONVERSATION)->value) {
             return redirect()->route('audits.details', $audit);
         } else {
-            $segments = QuestionSegment::with('auditQuestions')->get();
-
-            return view('audits.questions', compact('audit', 'segments'));
+            return redirect()->route('audits.questions.create', $audit);
         }
 
         return redirect()->route('audits.index')->with('success', 'Audit created successfully.');
@@ -89,7 +87,12 @@ class AuditController extends Controller
         $request->validate([
             'good_practice' => 'nullable|boolean',
             'point_of_improvement' => 'nullable|boolean',
-            'signature' => 'required',
+            'signature' => ['required', 'string', function ($attribute, $value, $fail) {
+                if (!preg_match('/^data:image\/(png|jpeg);base64,/', $value)) {
+                    $fail('The ' . $attribute . ' must be a valid base64-encoded PNG or JPEG image.');
+                    return;
+                }
+            }],
             'comment' => 'nullable|string',
             'follow_up_date' => 'nullable|date',
             'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
@@ -107,8 +110,11 @@ class AuditController extends Controller
             }
         }
 
-        $image = base64_decode(str_replace(['data:image/png;base64,', ' '], ['', '+'], $request->input('signature')));
-        $imageName = 'signatures/' . uniqid() . '.png';
+        $dataURL = $request->input('signature');
+    
+        $image = str_replace('data:image/png;base64,', '', $dataURL);
+        $image = str_replace(' ', '+', $image);
+        $imageName = 'signatures/signature_' . uniqid() . '.png';
 
         Storage::disk('public')->put($imageName, base64_decode($image));
         $request->merge(['signature' => $imageName]);
@@ -237,9 +243,9 @@ class AuditController extends Controller
         return redirect()->route('audits.details', $audit);
     }
 
-    public function export() 
+    public function export()
     {
         $timestamp = now()->format('Y-m-d_H-i-s');
-        return Excel::download(new AuditsExport, "safety_walks_{$timestamp}.xlsx");
+        return Excel::download(new AuditsExport(), "safety_walks_{$timestamp}.xlsx");
     }
 }

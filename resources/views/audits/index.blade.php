@@ -18,8 +18,8 @@
                 </div>
             @endif
             <div class="mb-4 flex justify-between items-center">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4">Audit History</h3>
-                <a href="{{ route('audits.create') }}" class="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Audit</a>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4">Safety Walk History</h3>
+                <a href="{{ route('audits.create') }}" class="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Safety Walk</a>
             </div>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="overflow-x-auto">

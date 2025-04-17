@@ -18,7 +18,7 @@
                 </div>
             @endif
             <div class="mb-8">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4">Audit Overview</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4">Safety Walk Overview</h3>
                 <div class="mb-4 flex justify-center" style="max-height: 600px;">
                     <canvas id="auditPieChart" width="400" height="400"></canvas>
                     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

@@ -18,32 +18,27 @@
                 </div>
             @endif
             <div class="mb-8">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4">Key Safety Behaviour</h3>
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                     <ul class="list-disc pl-5">
                         
                         {{-- @foreach ($keySafetyBehaviours as $behaviour) --}}
-                            <li class="flex justify-center mb-4">
-                                <img src="/storage/{{setting('site.key_safety_image_1')}}" alt="Behaviour Image" class="object-cover rounded" style="width: 200px; height: auto; max-height: 150px;">
-                                <div class="px-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                                    <img src="/storage/{{setting('site.key_safety_image_1')}}" alt="Behaviour Image" class="object-cover rounded mb-4" style="width: 100%; height: auto; max-height: 150px;">
                                     <h1 class="text-lg font-semibold text-gray-900 dark:text-gray-200">Communication</h1>
                                     <span class="text-sm text-gray-700 dark:text-gray-300">{{setting('site.key_safety_text_1')}}</span>
                                 </div>
-                            </li>
-                            <li class="flex justify-center mb-4">
-                                <img src="/storage/{{setting('site.key_safety_image_2')}}" alt="Behaviour Image" class="object-cover rounded" style="width: 200px; height: auto; max-height: 150px;">
-                                <div class="px-4">
+                                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                                    <img src="/storage/{{setting('site.key_safety_image_2')}}" alt="Behaviour Image" class="object-cover rounded mb-4" style="width: 100%; height: auto; max-height: 150px;">
                                     <h1 class="text-lg font-semibold text-gray-900 dark:text-gray-200">Risk assessment</h1>
                                     <span class="text-sm text-gray-700 dark:text-gray-300">{{setting('site.key_safety_text_2')}}</span>
                                 </div>
-                            </li>
-                            <li class="flex justify-center mb-4">
-                                <img src="/storage/{{setting('site.key_safety_image_3')}}" alt="Behaviour Image" class="object-cover rounded" style="width: 200px; height: auto; max-height: 150px;">
-                                <div class="px-4">
+                                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
+                                    <img src="/storage/{{setting('site.key_safety_image_3')}}" alt="Behaviour Image" class="object-cover rounded mb-4" style="width: 100%; height: auto; max-height: 150px;">
                                     <h1 class="text-lg font-semibold text-gray-900 dark:text-gray-200">Involvement</h1>
                                     <span class="text-sm text-gray-700 dark:text-gray-300">{{setting('site.key_safety_text_3')}}</span>
                                 </div>
-                            </li>
+                            </div>
                         {{-- @endforeach --}}
                     </ul>
                 </div>
