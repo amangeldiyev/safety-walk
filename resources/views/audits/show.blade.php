@@ -46,6 +46,14 @@
                         <p class="text-sm text-gray-500 dark:text-gray-300">{{ $audit->comment }}</p>
                     </div>
                     <div>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Good Practice</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-300">{{ $audit->good_practice ? 'Yes' : 'No' }}</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Point of Improvement</h3>
+                        <p class="text-sm text-gray-500 dark:text-gray-300">{{ $audit->point_of_improvement ? 'Yes' : 'No' }}</p>
+                    </div>
+                    <div>
                         <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Follow Up Date</h3>
                         <p class="text-sm text-gray-500 dark:text-gray-300">{{ $audit->follow_up_date }}</p>
                     </div>

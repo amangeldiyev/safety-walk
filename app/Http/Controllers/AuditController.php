@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AuditMode;
+use App\Exports\AuditsExport;
 use App\Http\Requests\CreateAuditRequest;
 use App\Http\Requests\UpdateAuditRequest;
 use App\Models\Audit;
@@ -12,10 +13,27 @@ use App\Models\QuestionSegment;
 use App\Models\Site;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Storage;
 
 class AuditController extends Controller
 {
+    /**
+     * Display the dashboard with audit statistics.
+     */
+    public function dashboard()
+    {
+        return view('audits.dashboard');
+    }
+
+    /**
+     * Display the key safety behaviour page.
+     */
+    public function keySafetyBehaviour()
+    {
+        return view('audits.safety-behaviour');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -176,6 +194,20 @@ class AuditController extends Controller
     }
 
     /**
+     * Display the segment page for the specified audit.
+     */
+    public function segment(Audit $audit, QuestionSegment $segment)
+    {
+        $segment->load('auditQuestions');
+        $segments = [$segment];
+        $audit->load(['items' => function ($query) use ($segment) {
+            $query->whereIn('audit_question_id', $segment->auditQuestions->pluck('id'));
+        }]);
+
+        return view('audits.questions', compact('audit', 'segments'));
+    }
+
+    /**
      * Display the questions for the specified audit.
      */
     public function questions(Audit $audit)
@@ -203,5 +235,11 @@ class AuditController extends Controller
         }
 
         return redirect()->route('audits.details', $audit);
+    }
+
+    public function export() 
+    {
+        $timestamp = now()->format('Y-m-d_H-i-s');
+        return Excel::download(new AuditsExport, "safety_walks_{$timestamp}.xlsx");
     }
 }

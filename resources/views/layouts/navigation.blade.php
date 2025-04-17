@@ -18,7 +18,12 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('audits.index')" :active="request()->routeIs('audits.index')">
-                        {{ __('Audits') }}
+                        {{ __('Safety Walk History') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('key-safety-behaviour')" :active="request()->routeIs('key-safety-behaviour')">
+                        {{ __('Key Safety Behaviour') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -41,6 +46,15 @@
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('audits.index')">
+                            {{ __('Safety Walk History') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('key-safety-behaviour')">
+                            {{ __('Key Safety Behaviour') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -85,10 +99,22 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                
+                <x-dropdown-link :href="route('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-dropdown-link>
+                <x-dropdown-link :href="route('audits.index')">
+                    {{ __('Safety Walk History') }}
+                </x-dropdown-link>
+                <x-dropdown-link :href="route('key-safety-behaviour')">
+                    {{ __('Key Safety Behaviour') }}
+                </x-dropdown-link>
+
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-
+                
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

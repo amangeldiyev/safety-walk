@@ -17,51 +17,6 @@
                     <span class="font-medium">{{session('success')}}</span>
                 </div>
             @endif
-            <div class="mb-8">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4">Audit Overview</h3>
-                <div class="mb-4 flex justify-center" style="max-height: 300px;">
-                    <canvas id="auditPieChart" width="400" height="400"></canvas>
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                    <script>
-                        var ctx = document.getElementById('auditPieChart').getContext('2d');
-                        var auditPieChart = new Chart(ctx, {
-                            type: 'pie',
-                            data: {
-                                labels: ['Completed', 'Not Completed'],
-                                datasets: [{
-                                    label: '',
-                                    data: [
-                                        {{ auth()->user()->actual_count }},
-                                        {{ auth()->user()->target_count - auth()->user()->actual_count}}
-                                    ],
-                                    backgroundColor: [
-                                        'rgba(54, 162, 235, 0.2)',
-                                        'rgba(255, 99, 132, 0.2)'
-                                    ],
-                                    borderColor: [
-                                        'rgba(54, 162, 235, 1)',
-                                        'rgba(255, 99, 132, 1)'
-                                    ],
-                                    borderWidth: 1
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    title: {
-                                        display: true,
-                                        text: 'Safety walk progress'
-                                    }
-                                }
-                            }
-                        });
-                    </script>
-                </div>
-            </div>
-            <hr class="py-4 mt-8 border-t-2 border-gray-200 dark:border-gray-700">
             <div class="mb-4 flex justify-between items-center">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4">Audit History</h3>
                 <a href="{{ route('audits.create') }}" class="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Audit</a>
@@ -144,38 +99,6 @@
                 </div>
             </div>
 
-            <hr class="py-4 mt-8 border-t-2 border-gray-200 dark:border-gray-700">
-            <div class="mb-8">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-200 mb-4">Key Safety Behaviour</h3>
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                    <ul class="list-disc pl-5">
-                        
-                        {{-- @foreach ($keySafetyBehaviours as $behaviour) --}}
-                            <li class="flex justify-center mb-4">
-                                <img src="/storage/{{setting('site.key_safety_image_1')}}" alt="Behaviour Image" class="object-cover rounded" style="width: 200px; height: auto; max-height: 150px;">
-                                <div class="px-4">
-                                    <h1 class="text-lg font-semibold text-gray-900 dark:text-gray-200">Communication</h1>
-                                    <span class="text-sm text-gray-700 dark:text-gray-300">{{setting('site.key_safety_text_1')}}</span>
-                                </div>
-                            </li>
-                            <li class="flex justify-center mb-4">
-                                <img src="/storage/{{setting('site.key_safety_image_2')}}" alt="Behaviour Image" class="object-cover rounded" style="width: 200px; height: auto; max-height: 150px;">
-                                <div class="px-4">
-                                    <h1 class="text-lg font-semibold text-gray-900 dark:text-gray-200">Risk assessment</h1>
-                                    <span class="text-sm text-gray-700 dark:text-gray-300">{{setting('site.key_safety_text_2')}}</span>
-                                </div>
-                            </li>
-                            <li class="flex justify-center mb-4">
-                                <img src="/storage/{{setting('site.key_safety_image_3')}}" alt="Behaviour Image" class="object-cover rounded" style="width: 200px; height: auto; max-height: 150px;">
-                                <div class="px-4">
-                                    <h1 class="text-lg font-semibold text-gray-900 dark:text-gray-200">Involvement</h1>
-                                    <span class="text-sm text-gray-700 dark:text-gray-300">{{setting('site.key_safety_text_3')}}</span>
-                                </div>
-                            </li>
-                        {{-- @endforeach --}}
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </x-app-layout>

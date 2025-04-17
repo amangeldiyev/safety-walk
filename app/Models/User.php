@@ -48,11 +48,11 @@ class User extends \TCG\Voyager\Models\User
 
     public function audits()
     {
-        return $this->hasMany(Audit::class, 'contact');
+        return $this->hasMany(Audit::class);
     }
 
     public function getActualCountAttribute()
     {
-        return $this->audits()->count();
+        return $this->audits()->whereYear('created_at', now()->year)->count();
     }
 }

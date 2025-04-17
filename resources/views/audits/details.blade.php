@@ -33,14 +33,28 @@
                 
                 <div class="mb-4">
                     <label for="audit_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $audit->mode == (\App\Enums\AuditMode::GUIDED)->value ? 'Comments' : 'Audit Description' }}</label>
+                    {{-- <button type="button" id="recordBtn">🎤 Record Voice</button> --}}
                     <textarea name="comment" id="audit_description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"></textarea>
                 </div>
-                @if ($audit->mode == (\App\Enums\AuditMode::CONVERSATION)->value)
-                    <div class="mb-4">
-                        <label for="follow_up_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Follow Up Date</label>
-                        <input type="date" name="follow_up_date" id="follow_up_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
-                    </div>
-                @endif
+                <div class="mb-4" id="follow_up_date_container" style="display: none;">
+                    <label for="follow_up_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Follow Up Date</label>
+                    <input type="date" name="follow_up_date" id="follow_up_date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const pointOfImprovementCheckbox = document.getElementById('point_of_improvement');
+                        const followUpDateContainer = document.getElementById('follow_up_date_container');
+
+                        pointOfImprovementCheckbox.addEventListener('change', function () {
+                            if (this.checked) {
+                                followUpDateContainer.style.display = 'block';
+                            } else {
+                                followUpDateContainer.style.display = 'none';
+                            }
+                        });
+                    });
+                </script>
 
                 <div class="mt-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Add Images(5MB)</h3>
@@ -78,6 +92,37 @@
                 document.getElementById('clear').addEventListener('click', function () {
                     signaturePad.clear();
                 });
+
+                // document.addEventListener("DOMContentLoaded", function() {
+                //     const recordBtn = document.getElementById("recordBtn");
+                //     const descriptionField = document.getElementById("comment");
+                //     let recognition;
+                
+                //     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+                //         recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                //         recognition.continuous = false;
+                //         recognition.interimResults = false;
+                //         recognition.lang = "en-US"; // Set language
+                
+                //         recordBtn.addEventListener("click", function() {
+                //             recognition.start();
+                //             recordBtn.innerText = "🎤 Recording...";
+                //         });
+                
+                //         recognition.onresult = function(event) {
+                //             const transcript = event.results[0][0].transcript;
+                //             descriptionField.value = transcript;
+                //             recordBtn.innerText = "🎤 Record Again";
+                //         };
+                
+                //         recognition.onerror = function(event) {
+                //             console.error("Speech recognition error:", event);
+                //             recordBtn.innerText = "🎤 Try Again";
+                //         };
+                //     } else {
+                //         alert("Speech recognition is not supported in your browser.");
+                //     }
+                // });
             </script>
         </div>
     </div>

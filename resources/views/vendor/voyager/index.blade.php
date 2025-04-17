@@ -1,0 +1,68 @@
+@extends('voyager::master')
+
+@section('content')
+    <div class="page-content">
+        @include('voyager::alerts')
+        @include('voyager::dimmers')
+        {{-- <h2 style="margin: 20px 50px">Dashboard</h2> --}}
+        <div>
+            <div class="Chart" style="display: flex; padding: 50px">
+                <canvas id="auditBarChart" style="width: 100%; max-width: 50%; max-height: 400px"></canvas>
+            </div>
+            <style>
+                @media (max-width: 768px) {
+                    #auditBarChart {
+                        max-width: 100%;
+                    }
+                }
+            </style>
+
+            @php
+                use Carbon\Carbon;
+
+                $auditData = \App\Models\Audit::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->groupBy('month')
+                    ->orderBy('month')
+                    ->get()
+                    ->map(function ($item) {
+                        return [
+                            'month' => Carbon::create()->month($item->month)->format('F'),
+                            'count' => $item->count,
+                        ];
+                    });
+            @endphp
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const ctx = document.getElementById('auditBarChart').getContext('2d');
+                    const auditData = @json($auditData); // Pass audit data from the controller
+                    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                    const counts = auditData.map(data => data.count);
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Safety Walk',
+                                data: counts,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+        </div>
+    </div>
+@stop

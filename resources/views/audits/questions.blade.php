@@ -13,18 +13,35 @@
                         @csrf
                         @foreach($segments as $segment)
                             <div class="mb-6">
-                                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center" style="cursor: pointer" onclick="toggleSegment({{ $segment->id }})">
-                                    <span id="arrow_{{ $segment->id }}" class="mr-2">▶</span>{{ $segment->name }}
-                                    <span class="ml-2 text-sm text-gray-600 dark:text-gray-400" id="completion_{{ $segment->id }}"></span>
-                                </h3>
-                                <div id="segment_{{ $segment->id }}" class="segment-content">
-                                    @foreach($segment->auditQuestions as $question)
-                                        <div class="mb-4">
-                                            <label for="question_{{ $question->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $question->question }}</label>
-                                            <input type="text" id="question_{{ $question->id }}" name="questions[{{ $question->id }}]" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" value="{{ $audit->items->firstWhere('audit_question_id', $question->id)->answer ?? '' }}" oninput="updateCompletion({{ $segment->id }})">
-                                        </div>
-                                    @endforeach
-                                </div>
+                                @if (Route::currentRouteName() === 'audits.questions.create')
+                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center" style="cursor: pointer">
+                                        <a href="{{ route('audits.questions.segment', ['audit' => $audit->id, 'segment' => $segment->id]) }}" class="flex items-center">
+                                            <span id="arrow_{{ $segment->id }}" class="mr-2">▶</span>{{ $segment->name }}
+                                            <span class="ml-2 text-sm text-gray-600 dark:text-gray-400" id="completion_{{ $segment->id }}"></span>
+                                        </a>
+                                    </h3>
+                                    <div id="segment_{{ $segment->id }}" class="segment-content">
+                                        @foreach($segment->auditQuestions as $question)
+                                            <div class="mb-4">
+                                                <label for="question_{{ $question->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $question->question }}</label>
+                                                <input type="text" id="question_{{ $question->id }}" name="questions[{{ $question->id }}]" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" value="{{ $audit->items->firstWhere('audit_question_id', $question->id)->answer ?? '' }}" oninput="updateCompletion({{ $segment->id }})">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @else
+                                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 flex items-center" style="cursor: pointer" onclick="toggleSegment({{ $segment->id }})">
+                                        <span id="arrow_{{ $segment->id }}" class="mr-2">▶</span>{{ $segment->name }}
+                                        <span class="ml-2 text-sm text-gray-600 dark:text-gray-400" id="completion_{{ $segment->id }}"></span>
+                                    </h3>
+                                    <div id="segment_{{ $segment->id }}" class="">
+                                        @foreach($segment->auditQuestions as $question)
+                                            <div class="mb-4">
+                                                <label for="question_{{ $question->id }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $question->question }}</label>
+                                                <input type="text" id="question_{{ $question->id }}" name="questions[{{ $question->id }}]" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" value="{{ $audit->items->firstWhere('audit_question_id', $question->id)->answer ?? '' }}" oninput="updateCompletion({{ $segment->id }})">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
                         @endforeach
 
