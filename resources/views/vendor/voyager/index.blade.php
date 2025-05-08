@@ -27,7 +27,7 @@
                     ->get()
                     ->map(function ($item) {
                         return [
-                            'month' => Carbon::create()->month($item->month)->format('F'),
+                            'month' => Carbon::create()->month((int)$item->month)->format('F'),
                             'count' => $item->count,
                         ];
                     });
