@@ -20,9 +20,9 @@
             @php
                 use Carbon\Carbon;
 
-                $auditData = \App\Models\Audit::selectRaw('MONTH(created_at) as month, COUNT(*) as count')
+                $auditData = \App\Models\Audit::selectRaw('EXTRACT(MONTH FROM created_at) as month, COUNT(*) as count')
                     ->whereYear('created_at', Carbon::now()->year)
-                    ->groupBy('month')
+                    ->groupBy(DB::raw('EXTRACT(MONTH FROM created_at)'))
                     ->orderBy('month')
                     ->get()
                     ->map(function ($item) {
