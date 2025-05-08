@@ -4,9 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuditController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuditController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::resource('audits', AuditController::class);
 Route::get('audits/{audit}/details', [AuditController::class, 'details'])->name('audits.details');
