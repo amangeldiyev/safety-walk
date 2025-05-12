@@ -20,7 +20,7 @@
             <div class="grid gap-6 lg:grid-cols-2 lg:gap-8">
                 <div
                     id="docs-card"
-                    class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-black/30 ring-white/[0.05] transition duration-300 hover:text-black/60 hover:ring-black/40 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10 dark:bg-zinc-900 dark:ring-zinc-800 dark:hover:text-white/70 dark:hover:ring-zinc-700 dark:focus-visible:ring-[#FF2D20]"
+                    class="flex flex-col items-start gap-6 overflow-hidden rounded-lg bg-white p-6 shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-black/30 ring-white/[0.05] transition duration-300 hover:text-black/60 hover:ring-black/40 focus:outline-none focus-visible:ring-[#FF2D20] md:row-span-3 lg:p-10 lg:pb-10"
                 >
                     <div class="w-full mb-8 p-4 rounded-lg shadow-md">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4 text-center">Safety Walk Overview</h3>
