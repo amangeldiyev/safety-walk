@@ -124,7 +124,7 @@
                                     finalTranscript += event.results[i][0].transcript + ' ';
                                 }
                             }
-                            descriptionField.value += finalTranscript.trim() + "\n";
+                            descriptionField.value += finalTranscript.trim() + ".\n";
                         };
 
                         recognition.onerror = function (event) {
