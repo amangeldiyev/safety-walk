@@ -33,7 +33,7 @@
                 
                 <div class="mb-4">
                     <label for="audit_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $audit->mode == (\App\Enums\AuditMode::GUIDED)->value ? 'Comments' : 'Audit Description' }}</label>
-                    {{-- <button type="button" id="recordBtn">🎤 Record Voice</button> --}}
+                    <button type="button" id="recordBtn">🎤 Record Voice</button>
                     <textarea name="comment" id="audit_description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"></textarea>
                 </div>
                 <div class="mb-4" id="follow_up_date_container" style="display: none;">
@@ -93,36 +93,36 @@
                     signaturePad.clear();
                 });
 
-                // document.addEventListener("DOMContentLoaded", function() {
-                //     const recordBtn = document.getElementById("recordBtn");
-                //     const descriptionField = document.getElementById("comment");
-                //     let recognition;
+                document.addEventListener("DOMContentLoaded", function() {
+                    const recordBtn = document.getElementById("recordBtn");
+                    const descriptionField = document.getElementById("comment");
+                    let recognition;
                 
-                //     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
-                //         recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                //         recognition.continuous = false;
-                //         recognition.interimResults = false;
-                //         recognition.lang = "en-US"; // Set language
+                    if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+                        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                        recognition.continuous = false;
+                        recognition.interimResults = false;
+                        recognition.lang = "en-US"; // Set language
                 
-                //         recordBtn.addEventListener("click", function() {
-                //             recognition.start();
-                //             recordBtn.innerText = "🎤 Recording...";
-                //         });
+                        recordBtn.addEventListener("click", function() {
+                            recognition.start();
+                            recordBtn.innerText = "🎤 Recording...";
+                        });
                 
-                //         recognition.onresult = function(event) {
-                //             const transcript = event.results[0][0].transcript;
-                //             descriptionField.value = transcript;
-                //             recordBtn.innerText = "🎤 Record Again";
-                //         };
+                        recognition.onresult = function(event) {
+                            const transcript = event.results[0][0].transcript;
+                            descriptionField.value = transcript;
+                            recordBtn.innerText = "🎤 Record Again";
+                        };
                 
-                //         recognition.onerror = function(event) {
-                //             console.error("Speech recognition error:", event);
-                //             recordBtn.innerText = "🎤 Try Again";
-                //         };
-                //     } else {
-                //         alert("Speech recognition is not supported in your browser.");
-                //     }
-                // });
+                        recognition.onerror = function(event) {
+                            console.error("Speech recognition error:", event);
+                            recordBtn.innerText = "🎤 Try Again";
+                        };
+                    } else {
+                        alert("Speech recognition is not supported in your browser.");
+                    }
+                });
             </script>
         </div>
     </div>
