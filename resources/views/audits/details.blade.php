@@ -95,7 +95,7 @@
 
                 document.addEventListener("DOMContentLoaded", function() {
                     const recordBtn = document.getElementById("recordBtn");
-                    const descriptionField = document.getElementById("comment");
+                    const descriptionField = document.getElementById("audit_description");
                     let recognition;
                 
                     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
