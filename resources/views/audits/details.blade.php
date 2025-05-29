@@ -93,31 +93,54 @@
                     signaturePad.clear();
                 });
 
-                document.addEventListener("DOMContentLoaded", function() {
+                document.addEventListener("DOMContentLoaded", function () {
                     const recordBtn = document.getElementById("recordBtn");
                     const descriptionField = document.getElementById("audit_description");
                     let recognition;
-                
+                    let isRecording = false;
+
                     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
                         recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-                        recognition.continuous = false;
+                        recognition.continuous = true; // Allow continuous recognition
                         recognition.interimResults = false;
-                        recognition.lang = "en-US"; // Set language
-                
-                        recordBtn.addEventListener("click", function() {
-                            recognition.start();
-                            recordBtn.innerText = "🎤 Recording...";
+                        recognition.lang = "en-US";
+
+                        recordBtn.addEventListener("click", function () {
+                            if (!isRecording) {
+                                recognition.start();
+                                isRecording = true;
+                                recordBtn.innerText = "🛑 Stop Recording";
+                            } else {
+                                recognition.stop();
+                                isRecording = false;
+                                recordBtn.innerText = "🎤 Start Recording";
+                            }
                         });
-                
-                        recognition.onresult = function(event) {
-                            const transcript = event.results[0][0].transcript;
-                            descriptionField.value = transcript;
-                            recordBtn.innerText = "🎤 Record Again";
+
+                        recognition.onresult = function (event) {
+                            let finalTranscript = '';
+                            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                                if (event.results[i].isFinal) {
+                                    finalTranscript += event.results[i][0].transcript + ' ';
+                                }
+                            }
+                            descriptionField.value += finalTranscript.trim() + "\n";
                         };
-                
-                        recognition.onerror = function(event) {
+
+                        recognition.onerror = function (event) {
                             console.error("Speech recognition error:", event);
-                            recordBtn.innerText = "🎤 Try Again";
+                            recordBtn.innerText = "🎤 Start Recording";
+                            isRecording = false;
+                        };
+
+                        recognition.onend = function () {
+                            // Optional: Automatically update UI when recognition ends (e.g., due to silence)
+                            if (isRecording) {
+                                // Restart if needed — useful if you want continuous retry
+                                recognition.start();
+                            } else {
+                                recordBtn.innerText = "🎤 Start Recording";
+                            }
                         };
                     } else {
                         alert("Speech recognition is not supported in your browser.");
