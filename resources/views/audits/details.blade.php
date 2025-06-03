@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-12 px-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
                 <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
@@ -65,8 +65,8 @@
 
                 <div class="mt-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Signature</h3>
-                    <div style="border: 1px solid #000; width: 400px; height: 200px;">
-                        <canvas id="signature-pad" width="400" height="200" style="background-color: lemonchiffon"></canvas>
+                    <div id="canvas-container" style="border: 1px solid #000; width: 100%; max-width: 400px; height: 200px;">
+                        <canvas id="signature-pad" style="background-color: lemonchiffon; width: 100%; height: 100%;"></canvas>
                     </div>
                     <button type="button" id="clear" style="color: brown">Clear</button>
                     <input type="hidden" name="signature" id="signature-input">
@@ -78,6 +78,21 @@
             </form>
 
             <script>
+                function resizeCanvas() {
+                    const canvas = document.getElementById('signature-pad');
+                    const container = document.getElementById('canvas-container');
+
+                    // Set canvas resolution to match container size
+                    canvas.width = container.clientWidth;
+                    canvas.height = container.clientHeight;
+                }
+
+                // Call on page load
+                window.addEventListener('load', resizeCanvas);
+
+                // Optionally call on window resize
+                window.addEventListener('resize', resizeCanvas);
+
                 const canvas = document.getElementById('signature-pad');
                 const signaturePad = new SignaturePad(canvas);
                 const signatureInput = document.getElementById('signature-input');

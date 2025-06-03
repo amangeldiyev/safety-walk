@@ -8,10 +8,10 @@ use App\Http\Requests\CreateAuditRequest;
 use App\Http\Requests\UpdateAuditRequest;
 use App\Models\Audit;
 use App\Models\AuditItem;
-use App\Models\AuditQuestion;
 use App\Models\QuestionSegment;
 use App\Models\Site;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Storage;
@@ -39,7 +39,7 @@ class AuditController extends Controller
      */
     public function index()
     {
-        $audits = Audit::with(['site', 'user'])->get();
+        $audits = Audit::where('user_id', Auth::user()->id)->with(['site', 'user'])->get();
 
         return view('audits.index', compact('audits'));
     }
@@ -111,7 +111,7 @@ class AuditController extends Controller
         }
 
         $dataURL = $request->input('signature');
-    
+
         $image = str_replace('data:image/png;base64,', '', $dataURL);
         $image = str_replace(' ', '+', $image);
         $imageName = 'signatures/signature_' . uniqid() . '.png';
