@@ -23,11 +23,25 @@ export default {
                 'danger': '#dc3545',
                 'light': '#f8f9fa',
                 'dark': '#212529',
+                'text': '#082231'
             },
             backgroundColor: {
                 'page': '#F3F4F6',
                 'card': '#FFFFFF',
-              },
+                'primary': '#212D40',
+                'secondary': '#BCC4C7',
+            },
+            text: {
+                'primary': '#082231',
+                'secondary': '#F7C59F',
+                'success': '#198754',
+                'info': '#0dcaf0',
+                'warning': '#ffc107',
+                'danger': '#dc3545',
+                'light': '#f8f9fa',
+                'dark': '#212529',
+                'text': '#082231'
+            },
         },
     },
     darkMode: false,

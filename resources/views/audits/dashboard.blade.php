@@ -74,7 +74,7 @@
                             </div>
 
                             <div class="pt-3 sm:pt-5 lg:pt-0">
-                                <h2 class="text-xl font-semibold text-black dark:text-white">Empowering Workplace Safety</h2>
+                                <h2 class="text-xl font-semibold text-black">Empowering Workplace Safety</h2>
 
                                 <p class="mt-4 text-sm/relaxed">
                                     The Safety Walk application is a user-friendly digital tool designed to streamline and enhance workplace safety inspections. It empowers safety officers and supervisors to efficiently conduct safety walks, identify potential hazards, document observations, assign corrective actions, and ensure compliance with safety protocols.
@@ -110,7 +110,7 @@
                     </div>
 
                     <div class="pt-3 sm:pt-5">
-                        <h2 class="text-xl font-semibold text-black dark:text-white">Risk assessment</h2>
+                        <h2 class="text-xl font-semibold text-black">Risk assessment</h2>
 
                         <p class="mt-4 text-sm/relaxed">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis id, incidunt qui impedit, soluta, illum veniam nisi dolor corrupti quisquam sapiente modi praesentium quod sequi numquam mollitia eligendi minima voluptatem?
@@ -130,7 +130,7 @@
                     </div>
 
                     <div class="pt-3 sm:pt-5">
-                        <h2 class="text-xl font-semibold text-black dark:text-white">Involvement</h2>
+                        <h2 class="text-xl font-semibold text-black">Involvement</h2>
 
                         <p class="mt-4 text-sm/relaxed">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis id, incidunt qui impedit, soluta, illum veniam nisi dolor corrupti quisquam sapiente modi praesentium quod sequi numquam mollitia eligendi minima voluptatem?

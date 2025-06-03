@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-gray-800 border-b border-gray-700">
+<nav x-data="{ open: false }" class="bg-gray-800 border-b border-gray-700" style="background-color: #B1C1C1; color: #585858">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,23 +6,23 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="{{ asset('images/logo.png') }}" alt="Application Logo" class="block h-12 w-auto" />
+                        <img src="{{ asset('images/logo-dark.png') }}" alt="Application Logo" class="block h-12 w-auto" />
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white">
-                        {{ __('Dashboard') }}
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-primary">
+                        {{ __('Home') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('audits.index')" :active="request()->routeIs('audits.index')" class="text-white">
+                    <x-nav-link :href="route('audits.index')" :active="request()->routeIs('audits.index')" class="text-primary">
                         {{ __('Safety Walk History') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('key-safety-behaviour')" :active="request()->routeIs('key-safety-behaviour')" class="text-white">
+                    <x-nav-link :href="route('key-safety-behaviour')" :active="request()->routeIs('key-safety-behaviour')" class="text-primary">
                         {{ __('Key Safety Behaviour') }}
                     </x-nav-link>
                 </div>
@@ -48,7 +48,10 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('dashboard')" class="text-white">
-                            {{ __('Dashboard') }}
+                            {{ __('Home') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('audits.create')" class="text-white">
+                            {{ __('Create Safety Walk') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('audits.index')" class="text-white">
                             {{ __('Safety Walk History') }}
@@ -94,22 +97,25 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">
-                <div class="font-medium text-base text-white">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-400">{{ Auth::user()->email }}</div>
+                <div class="font-medium text-base text-primary">{{ Auth::user()->name }}</div>
+                <div class="font-medium text-sm text-gray-600">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">
-                <x-dropdown-link :href="route('dashboard')" class="text-white">
-                    {{ __('Dashboard') }}
+                <x-dropdown-link :href="route('dashboard')" class="text-primary">
+                    {{ __('Home') }}
                 </x-dropdown-link>
-                <x-dropdown-link :href="route('audits.index')" class="text-white">
+                <x-dropdown-link :href="route('audits.create')" class="text-primary">
+                    {{ __('Create Safety Walk') }}
+                </x-dropdown-link>
+                <x-dropdown-link :href="route('audits.index')" class="text-primary">
                     {{ __('Safety Walk History') }}
                 </x-dropdown-link>
-                <x-dropdown-link :href="route('key-safety-behaviour')" class="text-white">
+                <x-dropdown-link :href="route('key-safety-behaviour')" class="text-primary">
                     {{ __('Key Safety Behaviour') }}
                 </x-dropdown-link>
 
-                <x-responsive-nav-link :href="route('profile.edit')" class="text-white">
+                <x-responsive-nav-link :href="route('profile.edit')" class="text-primary">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
@@ -117,7 +123,7 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
-                    <x-responsive-nav-link :href="route('logout')" class="text-white"
+                    <x-responsive-nav-link :href="route('logout')" class="text-primary"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
                         {{ __('Log Out') }}

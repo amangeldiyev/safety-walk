@@ -18,7 +18,9 @@
                 </div>
             @endif
             <div class="mb-4 flex justify-between items-center">
-                <a href="{{ route('audits.create') }}" class="inline-flex items-center px-4 py-2 border border-blue-500 text-sm font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Safety Walk</a>
+                <a href="{{ route('audits.create') }}" class="inline-flex items-center px-4 py-2 border border-gray-500 text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600">
+                    Create Safety Walk
+                </a>
             </div>
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg ring-1 ring-black/20">
                 <div class="overflow-x-auto">
