@@ -43,7 +43,7 @@ class AuditCreated extends Notification
                     ->when(!empty($this->audit->comment), function ($mailMessage) {
                         return $mailMessage->line('Comments: **' . $this->audit->comment . '**');
                     })
-                    ->action('View Audit', url('/audits/' . $this->audit->id))
+                    // ->action('View', url('/audits/' . $this->audit->id))
                     ->line('Thank you for using our application!');
     }
 
