@@ -11,9 +11,11 @@ use App\Models\AuditItem;
 use App\Models\QuestionSegment;
 use App\Models\Site;
 use App\Models\User;
+use App\Notifications\AuditCreated;
 use Auth;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Notification;
 use Storage;
 
 class AuditController extends Controller
@@ -120,6 +122,19 @@ class AuditController extends Controller
         $request->merge(['signature' => $imageName]);
 
         $audit->update($request->only('comment', 'good_practice', 'point_of_improvement', 'signature', 'follow_up_date'));
+
+        try {
+            $emails = array_filter(array_map('trim', explode(',', setting('admin.notification_emails'))));
+
+            if (!empty($emails)) {
+                $toLine = implode(',', $emails);
+
+                Notification::route('mail', $toLine)
+                    ->notify(new AuditCreated($audit));
+            }
+        } catch (\Exception $e) {
+            \Log::error('Failed to send notification: ' . $e->getMessage());
+        }
 
         return redirect()->route('audits.index')->with('success', 'Details saved successfully.');
     }
