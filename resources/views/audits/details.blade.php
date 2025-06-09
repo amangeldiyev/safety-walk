@@ -66,7 +66,7 @@
                 <div class="mt-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Signature</h3>
                     <div id="canvas-container" style="border: 1px solid #000; width: 100%; max-width: 400px; height: 200px;">
-                        <canvas id="signature-pad" style="background-color: lemonchiffon; width: 100%; height: 100%;"></canvas>
+                        <canvas id="signature-pad" style="background-color: lightgray; width: 100%; height: 100%;"></canvas>
                     </div>
                     <button type="button" id="clear" style="color: brown">Clear</button>
                     <input type="hidden" name="signature" id="signature-input">
