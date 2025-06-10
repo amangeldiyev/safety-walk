@@ -85,7 +85,13 @@
                         <svg class="size-6 shrink-0 stroke-[#FF2D20]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"/></svg>
                     </div> --}}
                 </div>
-
+                <div
+                    class="flex items-start gap-4 rounded-lg p-6 bg-white shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-black/30  ring-white/[0.05] transition duration-300 hover:text-black/70 ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20"
+                >
+                    <a href="{{ route('audits.create') }}" class="inline-flex items-center px-4 py-2 border border-gray-500 text-sm font-medium rounded-md shadow-sm text-white bg-gray-600 hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600">
+                        Create Safety Walk
+                    </a>
+                </div>
                 <div
                     class="flex items-start gap-4 rounded-lg p-6 bg-white shadow-[0px_14px_34px_0px_rgba(0,0,0,0.08)] ring-1 ring-black/30  ring-white/[0.05] transition duration-300 hover:text-black/70 ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20"
                 >

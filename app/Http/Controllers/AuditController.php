@@ -124,14 +124,16 @@ class AuditController extends Controller
         $audit->update($request->only('comment', 'good_practice', 'point_of_improvement', 'signature', 'follow_up_date'));
 
         try {
+            $receiver = $audit->contactUser->email;
+
             $emails = array_filter(array_map('trim', explode(',', setting('admin.notification_emails'))));
 
             if (!empty($emails)) {
-                $toLine = implode(',', $emails);
-
-                Notification::route('mail', $toLine)
-                    ->notify(new AuditCreated($audit));
+                $receiver = implode(',', array_merge([$receiver], $emails));
             }
+
+            Notification::route('mail', $receiver)
+                ->notify(new AuditCreated($audit));
         } catch (\Exception $e) {
             \Log::error('Failed to send notification: ' . $e->getMessage());
         }

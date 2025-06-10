@@ -24,9 +24,9 @@ class Audit extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function contact()
+    public function contactUser()
     {
-        return $this->belongsTo(User::class, 'contact_id');
+        return $this->belongsTo(User::class, 'contact');
     }
 
     public function site()
