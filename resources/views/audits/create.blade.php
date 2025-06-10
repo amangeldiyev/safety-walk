@@ -42,7 +42,7 @@
                             <label for="contact" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact</label>
                             <select id="contact" name="contact" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                                 @foreach($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option value="{{ $user->id }}">{{ $user->name }}({{ $user->email }})</option>
                                 @endforeach
                             </select>
                         </div>
