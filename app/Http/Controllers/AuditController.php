@@ -86,6 +86,10 @@ class AuditController extends Controller
      */
     public function storeDetails(Request $request, Audit $audit)
     {
+        if ($audit->user_id !== Auth::id()) {
+            return redirect()->route('audits.index')->with('error', 'You are not authorized to update this record.');
+        }
+
         $request->validate([
             'good_practice' => 'nullable|boolean',
             'point_of_improvement' => 'nullable|boolean',
@@ -166,6 +170,10 @@ class AuditController extends Controller
      */
     public function update(UpdateAuditRequest $request, Audit $audit)
     {
+        if ($audit->user_id !== Auth::id()) {
+            return redirect()->route('audits.index')->with('error', 'You are not authorized to update this record.');
+        }
+
         $audit->update($request->validated());
 
         return redirect()->route('audits.index')->with('success', 'Audit updated successfully.');
@@ -176,6 +184,10 @@ class AuditController extends Controller
      */
     public function destroy(Audit $audit)
     {
+        if ($audit->user_id !== Auth::id()) {
+            return redirect()->route('audits.index')->with('error', 'You are not authorized to delete this record.');
+        }
+
         $audit->delete();
 
         return redirect()->route('audits.index')->with('success', 'Audit deleted successfully.');
@@ -186,6 +198,10 @@ class AuditController extends Controller
      */
     public function storeAttachment(Request $request, Audit $audit)
     {
+        if ($audit->user_id !== Auth::id()) {
+            return redirect()->route('audits.index')->with('error', 'You are not authorized to update this record.');
+        }
+
         $request->validate([
             'attachment' => 'required|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
         ]);
@@ -207,6 +223,10 @@ class AuditController extends Controller
      */
     public function destroyAttachment(Request $request, Audit $audit, $attachmentId)
     {
+        if ($audit->user_id !== Auth::id()) {
+            return redirect()->route('audits.index')->with('error', 'You are not authorized to update this record.');
+        }
+
         $attachment = $audit->attachments()->findOrFail($attachmentId);
 
         \Storage::disk('public')->delete($attachment->file_path);
@@ -246,6 +266,10 @@ class AuditController extends Controller
      */
     public function storeQuestions(Request $request, Audit $audit)
     {
+        if ($audit->user_id !== Auth::id()) {
+            return redirect()->route('audits.index')->with('error', 'You are not authorized to update this record.');
+        }
+
         $questions = $request->input('questions', []);
 
         foreach ($questions as $questionId => $answer) {
