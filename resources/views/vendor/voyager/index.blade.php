@@ -38,7 +38,10 @@
                     const ctx = document.getElementById('auditBarChart').getContext('2d');
                     const auditData = @json($auditData); // Pass audit data from the controller
                     const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                    const counts = auditData.map(data => data.count);
+                    const counts = labels.map(month => {
+                        const data = auditData.find(item => item.month === month);
+                        return data ? data.count : 0;
+                    });
 
                     new Chart(ctx, {
                         type: 'bar',
