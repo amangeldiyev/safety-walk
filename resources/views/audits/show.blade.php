@@ -60,6 +60,22 @@
                 </div>
 
                 <div class="mt-6">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Questions</h3>
+                    @if ($audit->items->isNotEmpty())
+                        <ul class="mt-4 space-y-4">
+                            @foreach ($audit->items as $item)
+                                <li class="border-b pb-4">
+                                    <h4 class="text-md font-medium text-gray-900 dark:text-gray-200">{{ $item->question->question }}</h4>
+                                    <p class="text-sm text-gray-500 dark:text-gray-300">{{ $item->answer }}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p class="text-sm text-gray-500 dark:text-gray-300">No questions available for this audit.</p>
+                    @endif
+                </div>
+
+                <div class="mt-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Attachments</h3>
                     <form action="{{ route('audits.attachments.store', $audit->id) }}" method="POST" enctype="multipart/form-data" class="mt-4">
                         @csrf
@@ -95,7 +111,7 @@
                 </div>
 
                 <div class="mt-6 flex justify-end">
-                    <a href="{{ route('audits.edit', $audit->id) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500 mr-4">Edit</a>
+                    <a href="{{ route('audits.details', $audit->id) }}" class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-500 mr-4">Edit</a>
                     <form action="{{ route('audits.destroy', $audit->id) }}" method="POST" class="inline">
                         @csrf
                         @method('DELETE')
