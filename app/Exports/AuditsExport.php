@@ -42,9 +42,9 @@ class AuditsExport implements FromCollection, WithHeadings, WithMapping, ShouldA
         return [
             $audit->id,
             $audit->date,
-            $audit->user->name,
-            $audit->user->email,
-            $audit->site->name,
+            $audit->user ? $audit->user->name : '',
+            $audit->user ? $audit->user->email : '',
+            $audit->site ? $audit->site->name : '',
             $audit->mode === AuditMode::CONVERSATION ? 'Conversation' : 'Guided',
             $audit->good_practice ? '1' : '0',
             $audit->point_of_improvement ? '1' : '0',
