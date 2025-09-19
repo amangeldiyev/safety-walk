@@ -284,9 +284,13 @@ class AuditController extends Controller
         return redirect()->route('audits.details', $audit);
     }
 
-    public function export()
+    public function export(Request $request)
     {
-        $timestamp = now()->format('Y-m-d_H-i-s');
-        return Excel::download(new AuditsExport(), "safety_walks_{$timestamp}.xlsx");
+        if ($request->isMethod('POST')) {
+            $timestamp = now()->format('Y-m-d_H-i-s');
+            return Excel::download(new AuditsExport($request->start_date, $request->end_date), "safety_walks_{$timestamp}.xlsx");
+        }
+
+        return view('vendor.voyager.audits.export');
     }
 }

@@ -11,12 +11,18 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 
 class AuditsExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize
 {
+    public function __construct(public string $start, public string $end)
+    {
+        $this->start = $start;
+        $this->end = $end;
+    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
-        return Audit::with('site', 'user', 'contactUser')->get();
+        return Audit::with('site', 'user', 'contactUser')->whereBetween('created_at', [$this->start, $this->end . ' 23:59:59'])->get();
     }
 
     public function headings(): array

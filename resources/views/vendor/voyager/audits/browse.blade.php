@@ -22,7 +22,7 @@
                 </a>
             @endif
         @endcan
-        <a href="{{ route('admin.audits.export') }}" class="btn btn-primary btn-add-new">
+        <a href="{{ route('voyager.audits.export') }}" class="btn btn-primary btn-add-new">
             <i class="voyager-list"></i> <span>Export</span>
         </a>
         @can('delete', app($dataType->model_name))
