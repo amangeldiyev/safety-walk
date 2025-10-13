@@ -63,7 +63,7 @@
                                         <a href="{{ route('audits.show', $audit->id) }}" class="text-indigo-600 hover:text-indigo-900 block">{{ $audit->id }}</a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $audit->site->name }}
+                                        {{ $audit->site?->name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $audit->date }}
@@ -72,7 +72,7 @@
                                         {{ \App\Enums\AuditMode::tryFrom($audit->mode)?->name ?? '' }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $audit->user->name }}
+                                        {{ $audit->user?->name }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                         {{ $audit->is_virtual ? 'Yes' : 'No' }}
