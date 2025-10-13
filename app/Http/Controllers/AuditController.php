@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AuditMode;
+use App\Enums\AuditStatus;
 use App\Exports\AuditsExport;
 use App\Http\Requests\CreateAuditRequest;
 use App\Http\Requests\UpdateAuditRequest;
@@ -41,7 +42,9 @@ class AuditController extends Controller
      */
     public function index()
     {
-        $audits = Audit::where('user_id', Auth::user()->id)->with(['site', 'user'])->get();
+        $audits = Audit::where('user_id', Auth::user()->id)
+            ->with(['site', 'user'])
+            ->get();
 
         return view('audits.index', compact('audits'));
     }
@@ -123,9 +126,9 @@ class AuditController extends Controller
         $imageName = 'signatures/signature_' . uniqid() . '.png';
 
         Storage::disk('public')->put($imageName, base64_decode($image));
-        $request->merge(['signature' => $imageName]);
+        $request->merge(['signature' => $imageName, 'status' => AuditStatus::FINISHED->value]);
 
-        $audit->update($request->only('comment', 'good_practice', 'point_of_improvement', 'signature', 'follow_up_date'));
+        $audit->update($request->only('comment', 'good_practice', 'point_of_improvement', 'signature', 'follow_up_date', 'status'));
 
         try {
             $receiver = $audit->contactUser->email;

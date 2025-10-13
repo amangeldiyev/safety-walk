@@ -3,8 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\AuditStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends \TCG\Voyager\Models\User
@@ -53,6 +54,8 @@ class User extends \TCG\Voyager\Models\User
 
     public function getActualCountAttribute()
     {
-        return $this->audits()->whereYear('created_at', now()->year)->count();
+        return $this->audits()
+            ->whereYear('created_at', now()->year)
+            ->count();
     }
 }

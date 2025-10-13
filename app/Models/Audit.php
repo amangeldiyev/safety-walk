@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\AuditStatus;
+use App\Models\Scopes\AuditFinishedScope;
 use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,9 +16,19 @@ class Audit extends Model
 
     protected static function booted()
     {
+        static::addGlobalScope(new AuditFinishedScope);
+
         static::creating(function ($audit) {
             $audit->user_id = Auth::user()->id;
+            $audit->status = AuditStatus::DRAFT;
         });
+    }
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->withoutGlobalScopes()
+            ->where($field ?? $this->getRouteKeyName(), $value)
+            ->firstOrFail();
     }
 
     public function user()

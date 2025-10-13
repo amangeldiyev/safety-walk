@@ -10,9 +10,14 @@
                 <canvas id="auditBarChart" style="width: 100%; max-width: 50%; max-height: 400px"></canvas>
             </div>
             <style>
+                #auditBarChart {
+                    width: 100% !important;
+                    height: 400px !important;
+                    display: block !important;
+                }
                 @media (max-width: 768px) {
                     #auditBarChart {
-                        max-width: 100%;
+                        max-width: 100% !important;
                     }
                 }
             </style>
@@ -57,6 +62,7 @@
                         },
                         options: {
                             responsive: true,
+                            maintainAspectRatio: false,
                             scales: {
                                 y: {
                                     beginAtZero: true
