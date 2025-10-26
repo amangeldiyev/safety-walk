@@ -59,7 +59,7 @@
                 <div class="mt-6">
                     <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Add Images(5MB)</h3>
                     <div class="flex items-center">
-                        <input type="file" name="attachments[]" multiple class="block w-full text-sm text-gray-900 dark:text-gray-300 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <input type="file" id="attachments" name="attachments[]" multiple class="block w-full text-sm text-gray-900 dark:text-gray-300 border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                     </div>
                 </div>
 
@@ -78,6 +78,18 @@
             </form>
 
             <script>
+                const fileInput = document.getElementById('attachments');
+                const maxFileSize = 5 * 1024 * 1024;
+                fileInput.addEventListener('change', function () {
+                    for (const file of this.files) {
+                        if (file.size > maxFileSize) {
+                            alert(`"${file.name}" exceeds the 5 MB limit.`);
+                            this.value = '';
+                            break;
+                        }
+                    }
+                });
+                
                 function resizeCanvas() {
                     const canvas = document.getElementById('signature-pad');
                     const container = document.getElementById('canvas-container');

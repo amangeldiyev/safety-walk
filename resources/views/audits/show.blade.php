@@ -97,7 +97,9 @@
                                             <img src="{{ asset('storage/' . $attachment->file_path) }}" alt="{{ $attachment->name }}" class="w-20 h-20 object-cover">
                                         </a>
                                     @else
-                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank" class="text-white dark:text-white-400 hover:underline">{{ $attachment->file_name }}</a>
+                                        <a href="{{ asset('storage/' . $attachment->file_path) }}" target="_blank" class="text-gray-900 dark:text-gray-200 hover:underline">
+                                            {{ $attachment->file_name }}
+                                        </a>
                                     @endif
                                 </div>
                                 <form action="{{ route('audits.attachments.destroy', [$audit->id, $attachment->id]) }}" method="POST" class="inline">

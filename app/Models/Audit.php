@@ -4,9 +4,12 @@ namespace App\Models;
 
 use App\Enums\AuditStatus;
 use App\Models\Scopes\AuditFinishedScope;
+use App\Notifications\AuditCreated;
 use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Notification;
+use Storage;
 
 class Audit extends Model
 {
@@ -54,5 +57,47 @@ class Audit extends Model
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    public function saveAttachments(array $attachments)
+    {
+        foreach ($attachments as $file) {
+            $path = $file->store('attachments', 'public');
+            $this->attachments()->create([
+                'file_path' => $path,
+                'file_name' => $file->getClientOriginalName(),
+                'file_type' => $file->getClientMimeType(),
+                'file_size' => $file->getSize(),
+            ]);
+        }
+    }
+
+    public function saveSignature(string $signature): string
+    {
+        $image = str_replace('data:image/png;base64,', '', $signature);
+        $image = str_replace(' ', '+', $image);
+        $imageName = 'signatures/signature_' . uniqid() . '.png';
+
+        Storage::disk('public')->put($imageName, base64_decode($image));
+
+        return $imageName;
+    }
+
+    public function notify()
+    {
+        try {
+            $receiver = $this->contactUser->email;
+
+            $emails = array_filter(array_map('trim', explode(',', setting('admin.notification_emails'))));
+
+            if (!empty($emails)) {
+                $receiver = implode(',', array_merge([$receiver], $emails));
+            }
+
+            Notification::route('mail', $receiver)
+                ->notify(new AuditCreated($this));
+        } catch (\Exception $e) {
+            \Log::error('Failed to send notification: ' . $e->getMessage());
+        }
     }
 }
