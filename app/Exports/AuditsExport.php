@@ -22,7 +22,7 @@ class AuditsExport implements FromCollection, WithHeadings, WithMapping, ShouldA
     */
     public function collection()
     {
-        return Audit::with('site', 'user', 'contactUser')->whereBetween('created_at', [$this->start, $this->end . ' 23:59:59'])->get();
+        return Audit::with('site', 'user', 'contactUser')->whereBetween('date', [$this->start, $this->end . ' 23:59:59'])->get();
     }
 
     public function headings(): array

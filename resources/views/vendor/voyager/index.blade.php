@@ -25,9 +25,9 @@
             @php
                 use Carbon\Carbon;
 
-                $auditData = \App\Models\Audit::selectRaw('EXTRACT(MONTH FROM created_at) as month, COUNT(*) as count')
-                    ->whereYear('created_at', Carbon::now()->year)
-                    ->groupBy(DB::raw('EXTRACT(MONTH FROM created_at)'))
+                $auditData = \App\Models\Audit::selectRaw('EXTRACT(MONTH FROM date) as month, COUNT(*) as count')
+                    ->whereYear('date', Carbon::now()->year)
+                    ->groupBy(DB::raw('EXTRACT(MONTH FROM date)'))
                     ->orderBy('month')
                     ->get()
                     ->map(function ($item) {
