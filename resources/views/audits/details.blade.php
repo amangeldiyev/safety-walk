@@ -32,9 +32,12 @@
                 @endif
                 
                 <div class="mb-4">
-                    <label for="audit_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $audit->mode == (\App\Enums\AuditMode::GUIDED)->value ? 'Comments' : 'Audit Description' }}</label>
+                    <label for="audit_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                        {{ $audit->mode == (\App\Enums\AuditMode::GUIDED)->value ? 'Comments' : 'Audit Description' }}
+                        <span class="text-red-500">*</span>
+                    </label>
                     <button type="button" id="recordBtn">🎤 Record Voice</button>
-                    <textarea name="comment" id="audit_description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"></textarea>
+                    <textarea name="comment" id="audit_description" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" required></textarea>
                 </div>
                 <div class="mb-4" id="follow_up_date_container" style="display: none;">
                     <label for="follow_up_date" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Follow Up Date</label>
@@ -64,7 +67,7 @@
                 </div>
 
                 <div class="mt-6">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Signature</h3>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-gray-200">Signature<span class="text-red-500"> *</span></h3>
                     <div id="canvas-container" style="border: 1px solid #000; width: 100%; max-width: 400px; height: 200px;">
                         <canvas id="signature-pad" style="background-color: lightgray; width: 100%; height: 100%;"></canvas>
                     </div>
