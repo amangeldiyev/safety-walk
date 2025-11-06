@@ -36,7 +36,7 @@ class UpdateAuditDetailsRequest extends FormRequest
                     return;
                 }
             }],
-            'comment' => 'nullable|string',
+            'comment' => 'required|string',
             'follow_up_date' => 'nullable|date',
             'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:5120',
         ];
