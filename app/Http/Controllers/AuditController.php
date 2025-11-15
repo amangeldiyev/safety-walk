@@ -213,7 +213,7 @@ class AuditController extends Controller
      */
     public function questions(Audit $audit)
     {
-        $segments = QuestionSegment::with('auditQuestions')->get();
+        $segments = QuestionSegment::with('auditQuestions')->where('category', $audit->category)->get();
         $audit->load('items');
 
         return view('audits.questions', compact('audit', 'segments'));
@@ -232,6 +232,9 @@ class AuditController extends Controller
 
         foreach ($questions as $questionId => $answer) {
             if ($answer !== null) {
+                if (is_array($answer)) {
+                    $answer = implode(';', $answer);
+                }
                 AuditItem::updateOrCreate(
                     ['audit_id' => $audit->id, 'audit_question_id' => $questionId],
                     ['answer' => $answer]

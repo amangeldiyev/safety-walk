@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AuditMode;
 use App\Enums\AuditStatus;
 use App\Models\Scopes\AuditFinishedScope;
 use App\Notifications\AuditCreated;
@@ -19,7 +20,7 @@ class Audit extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope(new AuditFinishedScope);
+        static::addGlobalScope(new AuditFinishedScope());
 
         static::creating(function ($audit) {
             $audit->user_id = Auth::user()->id;
@@ -57,6 +58,17 @@ class Audit extends Model
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    public function getCategoryAttribute()
+    {
+        switch ($this->mode) {
+            case AuditMode::VEHICLE_SAFETY->value:
+                return 'vehicle';
+
+            default:
+                return 'general';
+        }
     }
 
     public function saveAttachments(array $attachments)

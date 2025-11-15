@@ -23,7 +23,7 @@ class CreateAuditRequest extends FormRequest
     {
         return [
             'date' => 'required|date',
-            'mode' => 'required|integer|min:0|max:1',
+            'mode' => 'required|integer|min:0|max:2',
             'site_id' => 'required|integer|exists:sites,id',
             'contact' => 'required|integer|exists:users,id',
             'is_virtual' => 'integer|nullable',

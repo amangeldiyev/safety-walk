@@ -18,9 +18,9 @@
                         <div class="mb-4">
                             <label for="mode" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Mode</label>
                             <select id="mode" name="mode" class="mt-1 text-black block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                                @foreach(\App\Enums\AuditMode::cases() as $mode)
-                                    <option value="{{ $mode->value }}">{{ $mode->name }}</option>
-                                @endforeach
+                                <option value="{{ \App\Enums\AuditMode::CONVERSATION }}">CONVERSATION</option>
+                                <option value="{{ \App\Enums\AuditMode::GUIDED }}">GUIDED SAFETY/FOOD SAFETY</option>
+                                <option value="{{ \App\Enums\AuditMode::VEHICLE_SAFETY }}">GUIDED MOTOR VEHICLE SAFETY</option>
                             </select>
                         </div>
                         <div class="mb-4">
