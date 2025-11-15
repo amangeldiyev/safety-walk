@@ -141,6 +141,7 @@
                                                                     plugins: ['remove_button'],
                                                                     persist: false,
                                                                     create: false,
+                                                                    dropdownParent: 'body',
                                                                     onChange: function() {
                                                                         console.log('asdasd');
                                                                         
