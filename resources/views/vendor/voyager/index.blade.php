@@ -25,48 +25,72 @@
             @php
                 use Carbon\Carbon;
 
-                $auditData = \App\Models\Audit::selectRaw('EXTRACT(MONTH FROM date) as month, COUNT(*) as count')
-                    ->whereYear('date', Carbon::now()->year)
+                $currentYear = Carbon::now()->year;
+                $previousYear = Carbon::now()->subYear()->year;
+
+                $currentYearData = \App\Models\Audit::selectRaw('EXTRACT(MONTH FROM date) as month, COUNT(*) as count')
+                    ->whereYear('date', $currentYear)
                     ->groupBy(DB::raw('EXTRACT(MONTH FROM date)'))
                     ->orderBy('month')
                     ->get()
-                    ->map(function ($item) {
-                        return [
-                            'month' => Carbon::create()->month((int)$item->month)->format('F'),
-                            'count' => $item->count,
-                        ];
-                    });
+                    ->map(fn ($item) => [
+                        'month' => Carbon::create()->month((int)$item->month)->format('F'),
+                        'count' => $item->count,
+                    ]);
+
+                $previousYearData = \App\Models\Audit::selectRaw('EXTRACT(MONTH FROM date) as month, COUNT(*) as count')
+                    ->whereYear('date', $previousYear)
+                    ->groupBy(DB::raw('EXTRACT(MONTH FROM date)'))
+                    ->orderBy('month')
+                    ->get()
+                    ->map(fn ($item) => [
+                        'month' => Carbon::create()->month((int)$item->month)->format('F'),
+                        'count' => $item->count,
+                    ]);
             @endphp
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
                     const ctx = document.getElementById('auditBarChart').getContext('2d');
-                    const auditData = @json($auditData); // Pass audit data from the controller
-                    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                    const counts = labels.map(month => {
-                        const data = auditData.find(item => item.month === month);
-                        return data ? data.count : 0;
-                    });
+
+                    const currentYearData = @json($currentYearData);
+                    const previousYearData = @json($previousYearData);
+
+                    const labels = [
+                        'January','February','March','April','May','June',
+                        'July','August','September','October','November','December'
+                    ];
+
+                    const currentCounts = labels.map(month =>
+                        currentYearData.find(i => i.month === month)?.count ?? 0
+                    );
+
+                    const previousCounts = labels.map(month =>
+                        previousYearData.find(i => i.month === month)?.count ?? 0
+                    );
 
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: labels,
-                            datasets: [{
-                                label: 'Safety Walk',
-                                data: counts,
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 1
-                            }]
+                            datasets: [
+                                {
+                                    label: '{{ $currentYear }}',
+                                    data: currentCounts,
+                                    backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                                },
+                                {
+                                    label: '{{ $previousYear }}',
+                                    data: previousCounts,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                                }
+                            ]
                         },
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
                             scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
+                                y: { beginAtZero: true }
                             }
                         }
                     });
