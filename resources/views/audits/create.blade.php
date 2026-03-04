@@ -60,4 +60,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+
+        const formatDate = (date) => date.toISOString().split('T')[0];
+
+        let minDate;
+        let maxDate;
+
+        // If today is the 1st day of the month
+        if (today.getDate() === 1) {
+            // Allow previous month start
+            const previousMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            minDate = previousMonthStart;
+        } else {
+            // Only current month start
+            minDate = new Date(today.getFullYear(), today.getMonth(), 1);
+        }
+
+        // Always allow until end of current month
+        maxDate = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
+        dateInput.min = formatDate(minDate);
+        dateInput.max = formatDate(maxDate);
+
+        // Optional: set default to today
+        dateInput.value = formatDate(today);
+    </script>
 </x-app-layout>
